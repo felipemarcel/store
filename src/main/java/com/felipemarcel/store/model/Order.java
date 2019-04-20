@@ -77,4 +77,12 @@ public class Order {
     public int getNumberOfProducts() {
         return this.orderProducts.size();
     }
+
+    public Order() {
+
+    }
+
+    public Order(Long id) {
+        this.id = id;
+    }
 }
