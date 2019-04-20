@@ -1,6 +1,7 @@
 package com.felipemarcel.store.api;
 
 import com.felipemarcel.store.model.Order;
+import com.felipemarcel.store.model.Product;
 import com.felipemarcel.store.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +47,22 @@ public class OrderController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         service.remove(id);
+        return ok().build();
+    }
+
+    @ResponseBody
+    @PostMapping("/{id}/products")
+    public ResponseEntity<?> addProduct(@PathVariable("id") Long id,
+                                        @Valid @RequestBody Product product,
+                                        @RequestBody Integer quantity) {
+        service.addProduct(id, product, quantity);
+        return ok().build();
+    }
+
+    @ResponseBody
+    @PutMapping("/{id}")
+    public ResponseEntity<?> setPaid(@PathVariable("id") Long id) {
+        service.setPaid(id);
         return ok().build();
     }
 }

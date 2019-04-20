@@ -25,7 +25,7 @@ public class ProductService {
     }
 
     public Product findBy(Long id) {
-        return repository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found."));
     }
 
     public void remove(Long id) {
