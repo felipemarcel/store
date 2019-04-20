@@ -40,10 +40,29 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void shouldReturnAllCustomers() {
+    public void shouldReturnAllProducts() {
         Page<Product> products = service.findAll(PageRequest.of(0, 5));
         if(products != null){
             assertThat(products.getContent(), hasSize(0));
         }
     }
+
+    @Test
+    public void shouldReturnProductById(){}
+
+    @Test
+    public void shouldNotReturnProductByInvalidId(){}
+
+    @Test
+    public void shouldSaveProduct(){
+
+    }
+
+    @Test
+    public void shouldNotSaveProduct(){
+
+    }
+
+    @Test
+    public void shouldRemoveProduct(){}
 }
