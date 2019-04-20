@@ -12,6 +12,7 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository repository;
+
     public Page<Customer> findAll(Pageable pageable){
         return repository.findAll(pageable);
     }

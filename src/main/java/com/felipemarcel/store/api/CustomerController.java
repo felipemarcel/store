@@ -4,22 +4,21 @@ import com.felipemarcel.store.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-@RestController(value = "/customers")
+@RestController
+@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     private CustomerService service;
 
     @ResponseBody
-    @GetMapping(params = {"page", "size"})
-    public ResponseEntity<?> listAll(@RequestParam("page") int page, @RequestParam("size") int size) {
+    @GetMapping
+    public ResponseEntity<?> listAll(@RequestParam(value = "page", defaultValue = "0") int page,
+                                     @RequestParam(value = "size", defaultValue = "5") int size) {
         return ok(service.findAll(PageRequest.of(page, size)));
     }
 }
