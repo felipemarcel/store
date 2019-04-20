@@ -30,7 +30,7 @@ public class OrderServiceTest {
     static class OrderServiceTestContextConfiguration {
 
         @Bean
-        public OrderService customerService() {
+        public OrderService orderService() {
             return new OrderService();
         }
     }
