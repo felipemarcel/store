@@ -17,4 +17,12 @@ public class CustomerService {
         return repository.findAll(pageable);
     }
 
+    public Customer save(Customer customer){
+        return null;
+    }
+
+    public Customer findBy(Long id){
+        return null;
+    }
+
 }
