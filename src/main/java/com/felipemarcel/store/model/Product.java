@@ -17,6 +17,7 @@ public class Product {
     @NotNull(message = "Product name is required.")
     private String name;
 
+    @NotNull(message = "Product price is required.")
     private Double price;
 
     private String pictureUrl;

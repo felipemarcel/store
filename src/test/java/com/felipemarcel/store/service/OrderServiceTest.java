@@ -5,7 +5,6 @@ import com.felipemarcel.store.repository.OrderRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
@@ -98,6 +97,14 @@ public class OrderServiceTest {
 
         service.remove(order.getId());
         verify(service, times(1)).remove(order.getId());
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    public void shouldSetPaid() {
+        Order order = new Order(1L);
+        doNothing().when(service).setPaid(order.getId());
+        verify(service, times(1)).setPaid(order.getId());
         verifyNoMoreInteractions(service);
     }
 }

@@ -51,11 +51,10 @@ public class OrderController {
     }
 
     @ResponseBody
-    @PostMapping("/{id}/products")
+    @PutMapping("/{id}/products")
     public ResponseEntity<?> addProduct(@PathVariable("id") Long id,
-                                        @Valid @RequestBody Product product,
-                                        @RequestBody Integer quantity) {
-        service.addProduct(id, product, quantity);
+                                        @Valid @RequestBody Product product) {
+        service.addProduct(id, product, 1);
         return ok().build();
     }
 

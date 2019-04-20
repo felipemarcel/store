@@ -50,7 +50,7 @@ public class OrderService {
     public void addProduct(Long id, Product product, Integer quantity) {
         Order order = findBy(id);
         Product recoveredProduct = productService.findBy(product.getId());
-        orderProductService.save(new OrderProduct(order, product, quantity));
+        orderProductService.save(new OrderProduct(order, recoveredProduct, quantity));
     }
 
     public void setPaid(Long id) {

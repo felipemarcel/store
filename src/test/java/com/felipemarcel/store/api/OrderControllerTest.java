@@ -2,7 +2,10 @@ package com.felipemarcel.store.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.felipemarcel.store.model.Order;
+import com.felipemarcel.store.model.Product;
+import com.felipemarcel.store.service.OrderProductService;
 import com.felipemarcel.store.service.OrderService;
+import com.felipemarcel.store.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,6 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -35,9 +37,17 @@ public class OrderControllerTest {
     @MockBean
     private OrderService service;
 
+    @MockBean
+    private ProductService productService;
+
+    @MockBean
+    private OrderProductService orderProductService;
+
     @Test
     public void contextLoads() {
         assertThat(service).isNotNull();
+        assertThat(productService).isNotNull();
+        assertThat(orderProductService).isNotNull();
         assertThat(mockMvc).isNotNull();
     }
 
@@ -92,6 +102,30 @@ public class OrderControllerTest {
 
         verify(service, times(1)).remove(order.getId());
         verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    public void shouldSetPaid() throws Exception {
+        Order order = new Order(1L);
+        doNothing().when(service).setPaid(order.getId());
+        mockMvc.perform(put("/orders/{id}", order.getId()))
+                .andExpect(status().isOk());
+        verify(service, times(1)).setPaid(order.getId());
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    public void shouldAddProduct() throws Exception {
+        Order order = new Order(1L);
+        Product product = new Product(1L, "Batata", 3.23, "");
+        when(service.save(order)).thenReturn(order);
+        when(productService.save(product)).thenReturn(product);
+
+        doNothing().when(service).addProduct(order.getId(), product, 1);
+        mockMvc.perform(put("/orders/{id}/products", order.getId())
+                .contentType(APPLICATION_JSON)
+                .content(asJsonString(product)))
+                .andExpect(status().isOk());
     }
 
     public static String asJsonString(final Object obj) {
