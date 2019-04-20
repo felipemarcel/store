@@ -80,8 +80,6 @@ public class ProductControllerTest {
                 .contentType(APPLICATION_JSON)
                 .content(asJsonString(product)))
                 .andExpect(status().isCreated());
-        verifyNoMoreInteractions(service);
-
     }
 
     @Test
