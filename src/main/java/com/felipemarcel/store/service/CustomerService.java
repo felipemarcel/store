@@ -1,5 +1,6 @@
 package com.felipemarcel.store.service;
 
+import com.felipemarcel.store.exception.ResourceNotFoundException;
 import com.felipemarcel.store.model.Customer;
 import com.felipemarcel.store.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,14 @@ public class CustomerService {
 
     public Page<Customer> findAll(Pageable pageable){
         return repository.findAll(pageable);
+    }
+
+    public Customer save(Customer customer){
+        return repository.save(customer);
+    }
+
+    public Customer findBy(Long id){
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found."));
     }
 
 }
