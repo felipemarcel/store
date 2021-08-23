@@ -19,8 +19,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/customers")
 public class CustomerController {
 
+    private final CustomerService service;
+
     @Autowired
-    private CustomerService service;
+    public CustomerController(CustomerService service) {
+        this.service = service;
+    }
 
     @ResponseBody
     @GetMapping

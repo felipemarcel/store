@@ -18,8 +18,12 @@ import static org.springframework.http.ResponseEntity.created;
 @RequestMapping("/products")
 public class ProductController {
 
+    private final ProductService service;
+
     @Autowired
-    private ProductService service;
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping
     @ResponseBody

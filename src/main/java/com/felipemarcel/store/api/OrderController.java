@@ -20,8 +20,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/orders")
 public class OrderController {
 
+    private final OrderService service;
+
     @Autowired
-    private OrderService service;
+    public OrderController(OrderService service) {
+        this.service = service;
+    }
 
     @GetMapping
     @ResponseBody

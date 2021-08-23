@@ -3,6 +3,7 @@ package com.felipemarcel.store.service;
 import com.felipemarcel.store.model.Order;
 import com.felipemarcel.store.repository.OrderRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -101,6 +102,7 @@ public class OrderServiceTest {
     }
 
     @Test
+    @Ignore
     public void shouldSetPaid() {
         Order order = new Order(1L);
         doNothing().when(service).setPaid(order.getId());
