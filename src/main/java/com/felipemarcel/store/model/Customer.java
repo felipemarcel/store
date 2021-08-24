@@ -1,6 +1,10 @@
 package com.felipemarcel.store.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +17,17 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @JsonProperty(value = "firstName")
+    @Column(name = "first_name")
+    @NotNull
+    @NotEmpty
     private String firstName;
+
+    @JsonProperty("lastName")
+    @Column(name = "last_name")
+    @NotNull
+    @NotEmpty
     private String lastName;
 
 
