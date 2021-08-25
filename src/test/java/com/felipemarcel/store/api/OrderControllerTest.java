@@ -3,7 +3,6 @@ package com.felipemarcel.store.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.felipemarcel.store.model.Order;
 import com.felipemarcel.store.model.Product;
-import com.felipemarcel.store.service.OrderProductService;
 import com.felipemarcel.store.service.OrderService;
 import com.felipemarcel.store.service.ProductService;
 import org.junit.Test;
@@ -40,14 +39,10 @@ public class OrderControllerTest {
     @MockBean
     private ProductService productService;
 
-    @MockBean
-    private OrderProductService orderProductService;
-
     @Test
     public void contextLoads() {
         assertThat(service).isNotNull();
         assertThat(productService).isNotNull();
-        assertThat(orderProductService).isNotNull();
         assertThat(mockMvc).isNotNull();
     }
 
@@ -66,7 +61,7 @@ public class OrderControllerTest {
 
     @Test
     public void shouldReturnOrderById() throws Exception {
-        Order order = new Order();
+        Order order = Order.builder().id(1L).build();
         when(service.findBy(1L)).thenReturn(order);
 
         mockMvc.perform(get("/orders/{id}", 1L)).andExpect(status().isOk());
@@ -85,7 +80,7 @@ public class OrderControllerTest {
 
     @Test
     public void shouldSaveOrder() throws Exception {
-        Order order = new Order(1L);
+        Order order = Order.builder().id(1L).build();
         when(service.save(any(Order.class))).thenReturn(order);
         mockMvc.perform(post("/orders")
                 .contentType(APPLICATION_JSON)
@@ -95,7 +90,7 @@ public class OrderControllerTest {
 
     @Test
     public void shouldRemoveOrder() throws Exception {
-        Order order = new Order(1L);
+        Order order = Order.builder().id(1L).build();
         when(service.findBy(order.getId())).thenReturn(order);
         doNothing().when(service).remove(order.getId());
         mockMvc.perform(delete("/orders/{id}", order.getId())).andExpect(status().isOk());
@@ -106,7 +101,7 @@ public class OrderControllerTest {
 
     @Test
     public void shouldSetPaid() throws Exception {
-        Order order = new Order(1L);
+        Order order = Order.builder().id(1L).build();
         doNothing().when(service).setPaid(order.getId());
         mockMvc.perform(put("/orders/{id}", order.getId()))
                 .andExpect(status().isOk());
@@ -116,7 +111,7 @@ public class OrderControllerTest {
 
     @Test
     public void shouldAddProduct() throws Exception {
-        Order order = new Order(1L);
+        Order order = Order.builder().id(1L).build();
         Product product = new Product(1L, "Batata", 3.23, "");
         when(service.save(order)).thenReturn(order);
         when(productService.save(product)).thenReturn(product);
